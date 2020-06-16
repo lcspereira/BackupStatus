@@ -8,7 +8,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using BackupStatus.Models;
+using FuzzySharp;
 
 namespace BackupStatus.WebUI.Controllers
 {
@@ -23,14 +25,37 @@ namespace BackupStatus.WebUI.Controllers
             DUP_ADDR = 2
         }
 
-        // GET: Hosts
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult Index(string queryName)
         {
-            var hosts = from h in db.Hosts
-                        orderby h.ReturnCode descending
-                        where h.LastStatusUpdate != null
-                        select h;
+            List<Host> hosts;
 
+
+            if (queryName.IsEmpty())
+            {
+                hosts = (from h in db.Hosts
+                         orderby h.ReturnCode descending
+                         where h.LastStatusUpdate != null
+                         select h).ToList();
+            }
+            else
+            {
+                var hostNames = from h in db.Hosts
+                                select h.Name;
+
+                var fuzzyAux = Process.ExtractOne(queryName, hostNames);
+
+                if (fuzzyAux.Score >= 90)
+                {
+                    hosts = (from h in db.Hosts
+                             where h.Name == fuzzyAux.Value
+                             select h).ToList();
+                }
+                else
+                {
+                    hosts = new List<Host>();
+                }
+            }
             return View(hosts);
         }
 

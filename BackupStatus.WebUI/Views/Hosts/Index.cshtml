@@ -7,8 +7,23 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Adicionar Host", "Create")
+    <div class="row">
+        <div class="col-md-2">
+            @Html.ActionLink("Adicionar Host", "Create")
+        </div>
+        <form method="get" action=".">
+            <div class="pull-right">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Buscar" name="queryName" id="queryName">
+                    <div class="input-group-btn">
+                        <input type="submit" value="Buscar" class="btn btn-info">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </p>
+
 <table class="table">
     <tr>
         <th>
