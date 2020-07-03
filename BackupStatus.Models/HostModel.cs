@@ -52,6 +52,10 @@ namespace BackupStatus.Models
         [Required]
         public string Address { get; set; }
 
+        [DisplayName("Caminho do banco de dados")]
+        [Required]
+        public string DbLocation { get; set; }
+
         [DisplayName("Status")]
         [EnumDataType(typeof(StatusCode))]
         public StatusCode ReturnCode { get; set; }

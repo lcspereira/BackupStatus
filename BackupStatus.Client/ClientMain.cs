@@ -36,9 +36,19 @@ namespace BackupStatus.Client
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            response = await client.GetAsync("api/UpdateStatus/" + srvName);
+            if (response.IsSuccessStatusCode)
+            {
+                host = await response.Content.ReadAsAsync<Host>();
+            }
+            else
+            {
+                throw new HttpRequestException("Erro ao acessar " + client.BaseAddress + ": " + response.StatusCode);
+            }
+
             // Backup software database connection
-            Console.WriteLine("Conectando ao banco de dados " + args[1] + "...");
-            sqliteConnection = new SQLiteConnection(@"DataSource=" + args[1]);
+            Console.WriteLine("Conectando ao banco de dados " + host.DbLocation + "...");
+            sqliteConnection = new SQLiteConnection(@"DataSource=" + host.DbLocation);
             sqliteConnection.Open();
 
             // Get the last log
@@ -79,19 +89,10 @@ namespace BackupStatus.Client
             // Update the status on the system
             try
             {
-                response = await client.GetAsync("api/UpdateStatus/" + srvName);
-                if (response.IsSuccessStatusCode)
-                {
-                    host = await response.Content.ReadAsAsync<Host>();
-                    host.ReturnCode = numStatus;
-                    host.LastStatusUpdate = lastMsgDate;
-                    response = await client.PutAsJsonAsync("api/UpdateStatus/" + host.Id, host);
-                    response.EnsureSuccessStatusCode();
-                }
-                else
-                {
-                    throw new HttpRequestException("Erro ao acessar " + client.BaseAddress + ": " + response.StatusCode);
-                }
+                host.ReturnCode = numStatus;
+                host.LastStatusUpdate = lastMsgDate;
+                response = await client.PutAsJsonAsync("api/UpdateStatus/" + host.Id, host);
+                response.EnsureSuccessStatusCode();
             }
             catch (HttpRequestException ex)
             {

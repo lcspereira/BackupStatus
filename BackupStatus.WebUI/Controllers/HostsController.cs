@@ -86,7 +86,7 @@ namespace BackupStatus.WebUI.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "Id,Name,Address,ReturnCode,LastStatusUpdate")] Host host)
+        public ActionResult Create([Bind(Include = "Id,Name,Address,DbLocation,ReturnCode,LastStatusUpdate")] Host host)
         {
             if (ModelState.IsValid)
             {
@@ -128,7 +128,7 @@ namespace BackupStatus.WebUI.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Id,Name,Address,ReturnCode,LastStatusUpdate")] Host host)
+        public ActionResult Edit([Bind(Include = "Id,Name,Address,DbLocation,ReturnCode,LastStatusUpdate")] Host host)
         {
             if (ModelState.IsValid)
             {

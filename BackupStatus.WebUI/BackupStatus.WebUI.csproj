@@ -169,6 +169,10 @@
     <Compile Include="Migrations\202007021344394_InitialCreate.designer.cs">
       <DependentUpon>202007021344394_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007032108105_HostModel_DbLocation.cs" />
+    <Compile Include="Migrations\202007032108105_HostModel_DbLocation.designer.cs">
+      <DependentUpon>202007032108105_HostModel_DbLocation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -240,6 +244,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202007021344394_InitialCreate.resx">
       <DependentUpon>202007021344394_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007032108105_HostModel_DbLocation.resx">
+      <DependentUpon>202007032108105_HostModel_DbLocation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

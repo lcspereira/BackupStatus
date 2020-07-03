@@ -53,8 +53,9 @@
             @Html.DisplayFor(modelItem => item.LastStatusUpdate)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Apagar", "Delete", new { id=item.Id })
+            @Html.ActionLink("Detalhes", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Apagar", "Delete", new { id = item.Id })
         </td>
     </tr>
 }
