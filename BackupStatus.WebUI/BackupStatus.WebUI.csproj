@@ -165,21 +165,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202004281726021_InitialCreate.cs" />
-    <Compile Include="Migrations\202004281726021_InitialCreate.designer.cs">
-      <DependentUpon>202004281726021_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004281755032_HostsMigration.cs" />
-    <Compile Include="Migrations\202004281755032_HostsMigration.designer.cs">
-      <DependentUpon>202004281755032_HostsMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004292319059_UniqueNameAndAddress2.cs" />
-    <Compile Include="Migrations\202004292319059_UniqueNameAndAddress2.designer.cs">
-      <DependentUpon>202004292319059_UniqueNameAndAddress2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005022154131_SeparateModel1.cs" />
-    <Compile Include="Migrations\202005022154131_SeparateModel1.designer.cs">
-      <DependentUpon>202005022154131_SeparateModel1.cs</DependentUpon>
+    <Compile Include="Migrations\202007021344394_InitialCreate.cs" />
+    <Compile Include="Migrations\202007021344394_InitialCreate.designer.cs">
+      <DependentUpon>202007021344394_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -195,6 +183,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -242,24 +232,15 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004281726021_InitialCreate.resx">
-      <DependentUpon>202004281726021_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004281755032_HostsMigration.resx">
-      <DependentUpon>202004281755032_HostsMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004292319059_UniqueNameAndAddress2.resx">
-      <DependentUpon>202004292319059_UniqueNameAndAddress2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005022154131_SeparateModel1.resx">
-      <DependentUpon>202005022154131_SeparateModel1.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\BackupStatus.Models\BackupStatus.Models.csproj">
       <Project>{34ce3c61-03ab-4005-a796-8065e54007b3}</Project>
       <Name>BackupStatus.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202007021344394_InitialCreate.resx">
+      <DependentUpon>202007021344394_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

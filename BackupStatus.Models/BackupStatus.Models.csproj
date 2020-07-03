@@ -52,21 +52,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HostModel.cs" />
-    <Compile Include="Migrations\202006051345526_003-Create.cs" />
-    <Compile Include="Migrations\202006051345526_003-Create.designer.cs">
-      <DependentUpon>202006051345526_003-Create.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006051345526_003-Create.resx">
-      <DependentUpon>202006051345526_003-Create.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

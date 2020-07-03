@@ -31,14 +31,17 @@ namespace BackupStatus.Client
             StatusCode numStatus;
             Host host;
 
+            // Web service connection
             client.BaseAddress = new Uri (args[0]);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+            // Backup software database connection
             Console.WriteLine("Conectando ao banco de dados " + args[1] + "...");
             sqliteConnection = new SQLiteConnection(@"DataSource=" + args[1]);
             sqliteConnection.Open();
 
+            // Get the last log
             using (var cmd = sqliteConnection.CreateCommand())
             {
                 cmd.CommandText = "SELECT Message, Timestamp FROM LogData WHERE OperationID = 1 ORDER BY Timestamp DESC LIMIT 1;";
@@ -49,8 +52,8 @@ namespace BackupStatus.Client
             }
             sqliteConnection.Close();
 
+            // Parse the last log and get the result
             var values = JObject.Parse(jsonMsg);
-
             switch ((string)values["ParsedResult"])
             {
                 case "Success":
@@ -73,6 +76,7 @@ namespace BackupStatus.Client
                     break;
             }
 
+            // Update the status on the system
             try
             {
                 response = await client.GetAsync("api/UpdateStatus/" + srvName);

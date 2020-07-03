@@ -1,16 +1,13 @@
 ﻿@model IEnumerable<BackupStatus.Models.Host>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Status dos backups";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
     <div class="row">
-        <div class="col-md-2">
-            @Html.ActionLink("Adicionar Host", "Create")
-        </div>
         <form method="get" action=".">
             <div class="pull-right">
                 <div class="input-group">
@@ -56,9 +53,8 @@
             @Html.DisplayFor(modelItem => item.LastStatusUpdate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Apagar", "Delete", new { id=item.Id })
         </td>
     </tr>
 }
