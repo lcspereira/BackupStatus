@@ -54,7 +54,13 @@ namespace BackupStatus.Client
             // Get the last log
             using (var cmd = sqliteConnection.CreateCommand())
             {
-                cmd.CommandText = "SELECT Message, Timestamp FROM LogData WHERE OperationID = 1 ORDER BY Timestamp DESC LIMIT 1;";
+                cmd.CommandText = "SELECT LD.Message, " +
+                                  "       LD.Timestamp " +
+                                  "  FROM LogData LD" +
+                                  "       INNER JOIN Operation O ON LD.OperationID = O.ID" +
+                                  " WHERE O.Description = 'Backup'" +
+                                  " ORDER BY LD.Timestamp DESC " +
+                                  " LIMIT 1;";
                 da = new SQLiteDataAdapter(cmd.CommandText, sqliteConnection);
                 da.Fill(dt);
                 jsonMsg = dt.Rows[0]["Message"].ToString();
