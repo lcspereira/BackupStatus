@@ -37,9 +37,12 @@ namespace BackupStatus.Client
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             response = await client.GetAsync("api/UpdateStatus/" + srvName);
+            Console.Error.WriteLine("Conectando a API da aplicacao (" + args[0] + ")...");
             if (response.IsSuccessStatusCode)
             {
                 host = await response.Content.ReadAsAsync<Host>();
+                Console.Error.WriteLine("OK");
+                Console.Error.WriteLine("Baixando dados do host...");
             }
             else
             {
@@ -47,13 +50,14 @@ namespace BackupStatus.Client
             }
 
             // Backup software database connection
-            Console.WriteLine("Conectando ao banco de dados " + host.DbLocation + "...");
+            Console.Error.WriteLine("Conectando ao banco de dados " + host.DbLocation + "...");
             sqliteConnection = new SQLiteConnection(@"DataSource=" + host.DbLocation);
             sqliteConnection.Open();
 
             // Get the last log
             using (var cmd = sqliteConnection.CreateCommand())
             {
+                Console.Error.WriteLine("Consultando o ultimo log de backup...");
                 cmd.CommandText = "SELECT LD.Message, " +
                                   "       LD.Timestamp " +
                                   "  FROM LogData LD" +
@@ -63,8 +67,10 @@ namespace BackupStatus.Client
                                   " LIMIT 1;";
                 da = new SQLiteDataAdapter(cmd.CommandText, sqliteConnection);
                 da.Fill(dt);
+                Console.Error.WriteLine("OK");
                 jsonMsg = dt.Rows[0]["Message"].ToString();
                 lastMsgDate = DateTimeOffset.FromUnixTimeSeconds((long)dt.Rows[0]["Timestamp"]).DateTime.ToLocalTime();
+                Console.Error.WriteLine(lastMsgDate);
             }
             sqliteConnection.Close();
 
@@ -95,6 +101,11 @@ namespace BackupStatus.Client
             // Update the status on the system
             try
             {
+                if (lastMsgDate == host.LastStatusUpdate)
+                {
+                    Console.Error.WriteLine("WARN");
+                    Console.Error.WriteLine("Parece nao ter havido alteracao nos logs do backup desde a ultima execucao.");
+                }
                 host.ReturnCode = numStatus;
                 host.LastStatusUpdate = lastMsgDate;
                 response = await client.PutAsJsonAsync("api/UpdateStatus/" + host.Id, host);
@@ -102,18 +113,18 @@ namespace BackupStatus.Client
             }
             catch (HttpRequestException ex)
             {
-                Console.WriteLine("Erro ao comunicar com o servidor.");
-                Console.WriteLine(ex);
+                Console.Error.WriteLine("Erro ao comunicar com o servidor.");
+                Console.Error.WriteLine(ex);
                 Environment.Exit(-1);
             }
             catch (ArgumentNullException ex)
             {
-                Console.WriteLine(ex);
+                Console.Error.WriteLine(ex);
                 Environment.Exit(-2);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.Error.WriteLine(ex);
                 Environment.Exit(-3);
             }
             Environment.Exit(0);
